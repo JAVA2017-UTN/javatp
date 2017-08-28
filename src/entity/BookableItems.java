@@ -1,4 +1,4 @@
-package entidades;
+package entity;
 
 public class BookableItems {
 	private int id;
@@ -16,15 +16,15 @@ public class BookableItems {
 		tipoElemento = tipo;
 	}
 	
-	private String getNombre() {
+	public String getNombre() {
 		return nombre;
 	}
 	
-	private int getId() {
+	public int getId() {
 		return id;
 	}
 	
-	private BookableTypes getTipoElemento() {
+	public BookableTypes getTipoElemento() {
 		return tipoElemento;
 	}
 	
