@@ -41,14 +41,6 @@ public class CtrlABMPeople {
 		People p=new People();
 		p.setDni(dni);
 		return getByDni(p);
-		/*for (int i=0; i < this.pers.size(); i++){
-			if(pers.get(i).getDni().equals(dni)) {
-				return pers.get(i);
-				
-			}
-		}
-		return null; //ver error si falta
-		*/
 	}
 	
 	public People getByNombreApellido(People p){
@@ -64,7 +56,6 @@ public class CtrlABMPeople {
 	}
 	
 	public ArrayList<People> getAll()throws Exception{
-		//return this.pers;
 		return dataPer.getAll();
 	}
 }
