@@ -11,6 +11,7 @@ public class FactoryConexion {
 	private String port="3306";
 	private String user="root";
 	private String password="39606313";
+
 	private String db="tpjava";
 	
 	private static FactoryConexion instancia;
