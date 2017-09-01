@@ -18,23 +18,19 @@ public class CtrlABMPeople {
 	}
 	
 	public void add(People p) throws Exception{
-		//this.pers.add(p);
 		dataPer.add(p);
 	}
 	
 	public void delete(People p)throws Exception{
-		//this.pers.remove(this.getByDni(p));
-		this.pers.remove(p);
+		dataPer.delete(p);
 	}
 	
 	public void update(People p)throws Exception{
-		this.delete(p);
-		this.add(p);
+		dataPer.update(p);
 	}
 	
 	public People getByDni(People p) throws Exception{
 		return this.dataPer.getByDni(p);
-		//return this.getByDni(p.getDni());
 	}
 	
 	public People getByDni(String dni)throws Exception{
@@ -57,5 +53,9 @@ public class CtrlABMPeople {
 	
 	public ArrayList<People> getAll()throws Exception{
 		return dataPer.getAll();
+	}
+	
+	public People validaUsuario(People p) throws Exception{
+		return this.dataPer.validaUsu(p);
 	}
 }

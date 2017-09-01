@@ -20,13 +20,14 @@ public class People {
 	estado = false;
 	}
 	
-	public void setPeople(String dniNum, String nom, String ape, String usu, String con, boolean est) {
-	dni = dniNum;
-	nombre = nom;
-	apellido = ape;
-	usuario = usu;
-	contrasenia = con;
-	estado = est;
+	public void setPeople(Integer idNum, String dniNum, String nom, String ape, String usu, String con, boolean est) {
+		id=idNum;
+		dni = dniNum;
+		nombre = nom;
+		apellido = ape;
+		usuario = usu;
+		contrasenia = con;
+		estado = est;
 	}
 	
 	
