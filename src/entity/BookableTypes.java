@@ -5,6 +5,13 @@ public class BookableTypes {
 	private String nombre;
 	private int cantReservasPendientes;
 	
+	public BookableTypes(){
+		nombre = null;
+		cantReservasPendientes = 0;
+	}
+	
+	
+	
 	public BookableTypes(int id, String nombre, int cantReservasPendientes) {
 		super();
 		this.id = id;

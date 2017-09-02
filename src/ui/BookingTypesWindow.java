@@ -4,16 +4,30 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import controllers.CtrlBookingTypes;
+import entity.BookableTypes;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+
 public class BookingTypesWindow {
+	
+	private CtrlBookingTypes ctrl = new CtrlBookingTypes();
 
 	private JFrame frmCargarTiposElementos;
 	private JTextField textFieldId;
 	private JTextField textFieldTipoElemento;
 	private JTextField textFieldMaxReservas;
+	private final Action action = new SwingAction();
 
 	/**
 	 * Launch the application.
@@ -81,11 +95,46 @@ public class BookingTypesWindow {
 		textFieldMaxReservas.setColumns(10);
 		
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				aceptarClick();
+			}
+		});
 		btnAceptar.setBounds(83, 168, 89, 23);
 		frmCargarTiposElementos.getContentPane().add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(218, 168, 89, 23);
 		frmCargarTiposElementos.getContentPane().add(btnCancelar);
+	}
+	
+	protected void aceptarClick() {
+		BookableTypes bt = this.mapearDeForm();
+		try{
+			ctrl.add(bt);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		this.textFieldId.setText(String.valueOf(bt.getId()));
+	}
+			
+	
+	private BookableTypes mapearDeForm(){
+		BookableTypes bt= new BookableTypes();
+		if(!this.textFieldId.getText().isEmpty()){
+			bt.setId(Integer.parseInt(this.textFieldId.getText()));
+		}
+		bt.setNombre(this.textFieldTipoElemento.getText());
+		bt.setCantReservasPendientes(Integer.parseInt(this.textFieldMaxReservas.getText()));
+		
+		return bt;
+	}
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
 	}
 }
