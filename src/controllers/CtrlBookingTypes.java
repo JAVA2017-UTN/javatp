@@ -41,17 +41,16 @@ private DataBookableTypes databt;
 		return getByDni(p);
 	}*/
 	
-	/*public People getByNombreApellido(People p){
+	public BookableTypes getByNombre(BookableTypes bt){
 		
-		for (int i=0; i < this.pers.size(); i++){
-			if(pers.get(i).getNombre().equalsIgnoreCase(p.getNombre())
-				&& pers.get(i).getApellido().equalsIgnoreCase(p.getApellido())) {
-				return pers.get(i);		
+		for (int i=0; i < this.booktypes.size(); i++){
+			if(booktypes.get(i).getNombre().equalsIgnoreCase(bt.getNombre())) {
+				return booktypes.get(i);		
 			}
 		}
-		return null; //ver error si falta
+		return null;
 		
-	}*/
+	}
 	
 	public ArrayList<BookableTypes> getAll()throws Exception{
 		return databt.getAll();

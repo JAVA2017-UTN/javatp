@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 
 import controllers.CtrlBookingTypes;
 import entity.BookableTypes;
+import entity.People;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -58,17 +59,17 @@ public class BookingTypesWindow {
 	private void initialize() {
 		frmCargarTiposElementos = new JFrame();
 		frmCargarTiposElementos.setTitle("Cargar tipos elementos");
-		frmCargarTiposElementos.setBounds(100, 100, 447, 273);
+		frmCargarTiposElementos.setBounds(100, 100, 508, 291);
 		frmCargarTiposElementos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCargarTiposElementos.getContentPane().setLayout(null);
 		
 		JLabel lblId = new JLabel("Id ");
-		lblId.setBounds(161, 44, 35, 14);
+		lblId.setBounds(171, 44, 22, 14);
 		frmCargarTiposElementos.getContentPane().add(lblId);
 		
 		JLabel lblTipoElemento = new JLabel("Tipo de elemento");
-		lblTipoElemento.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTipoElemento.setBounds(83, 82, 113, 14);
+		lblTipoElemento.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTipoElemento.setBounds(69, 79, 142, 14);
 		frmCargarTiposElementos.getContentPane().add(lblTipoElemento);
 		
 		textFieldId = new JTextField();
@@ -84,7 +85,7 @@ public class BookingTypesWindow {
 		textFieldTipoElemento.setColumns(10);
 		
 		JLabel lblMaxReservas = new JLabel("M\u00E1ximo reservas pendientes");
-		lblMaxReservas.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMaxReservas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMaxReservas.setBounds(44, 110, 167, 14);
 		frmCargarTiposElementos.getContentPane().add(lblMaxReservas);
 		
@@ -94,28 +95,91 @@ public class BookingTypesWindow {
 		frmCargarTiposElementos.getContentPane().add(textFieldMaxReservas);
 		textFieldMaxReservas.setColumns(10);
 		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(new ActionListener() {
+		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				aceptarClick();
+				agregarClick();
 			}
 		});
-		btnAceptar.setBounds(83, 168, 89, 23);
-		frmCargarTiposElementos.getContentPane().add(btnAceptar);
+		btnAgregar.setBounds(22, 168, 89, 23);
+		frmCargarTiposElementos.getContentPane().add(btnAgregar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(218, 168, 89, 23);
+		btnCancelar.setBounds(393, 168, 89, 23);
 		frmCargarTiposElementos.getContentPane().add(btnCancelar);
+		
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				modificarClick();
+			}
+		});
+		btnModificar.setBounds(121, 168, 89, 23);
+		frmCargarTiposElementos.getContentPane().add(btnModificar);
+		
+		JButton btnBorrar = new JButton("Borrar");
+		btnBorrar.setBounds(221, 168, 89, 23);
+		frmCargarTiposElementos.getContentPane().add(btnBorrar);
+		
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				buscarClick();
+			}
+		});
+		btnBuscar.setBounds(354, 75, 89, 23);
+		frmCargarTiposElementos.getContentPane().add(btnBuscar);
 	}
 	
-	protected void aceptarClick() {
+	
+	protected void buscarClick() {
+		try {
+			this.mapearAForm(ctrl.getByNombre(this.mapearDeForm()));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Tipo de elemento no encontrado");
+		}
+	}
+	
+	
+	protected void agregarClick() {
 		BookableTypes bt = this.mapearDeForm();
 		try{
-			ctrl.add(bt);
+			if(bt.getId() != 0 ) {
+				ctrl.add(bt);
+				JOptionPane.showMessageDialog(null, "Tipo de elemento agregado correctamente");
+				cleanForm();
+			}
+
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			JOptionPane.showMessageDialog(this.frmCargarTiposElementos, e.getMessage());
 		}
-		this.textFieldId.setText(String.valueOf(bt.getId()));
+		this.textFieldId.setText(String.valueOf(bt.getId()));	
+	}
+	
+	protected void modificarClick(){
+		try{
+			ctrl.update(this.mapearDeForm());
+			this.cleanForm();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this.frmCargarTiposElementos, e.getMessage());
+		}
+	}
+	
+	protected void borrarClick(){
+		try{
+			ctrl.delete(this.mapearDeForm());
+			this.cleanForm();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this.frmCargarTiposElementos, e.getMessage());
+		}
+	}
+	
+	private void cleanForm() {
+		this.textFieldId.setText(null);
+		this.textFieldTipoElemento.setText(null);
+		this.textFieldMaxReservas.setText(null);
 	}
 			
 	
@@ -129,6 +193,13 @@ public class BookingTypesWindow {
 		
 		return bt;
 	}
+	
+	private void mapearAForm(BookableTypes bt){
+		this.textFieldId.setText(String.valueOf(bt.getId()));
+		this.textFieldTipoElemento.setText(bt.getNombre());
+		this.textFieldMaxReservas.setText(String.valueOf(bt.getCantReservasPendientes()));
+	}
+	
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
 			putValue(NAME, "SwingAction");
