@@ -23,6 +23,7 @@ private DataBookableTypes databt;
 	
 	public void delete(BookableTypes bt)throws Exception{
 		this.booktypes.remove(bt);
+		databt.delete(bt);
 	}
 	
 	public void update(BookableTypes bt)throws Exception{
@@ -30,18 +31,22 @@ private DataBookableTypes databt;
 		this.add(bt);
 	}
 	
-	/*public BookableTypes getByDni(BookableTypes bt) throws Exception{
-		return this.databt.getByDni(bt);
-		//return this.getByDni(p.getDni());
+	public BookableTypes getByNombre(BookableTypes bt) throws Exception{
+		
+		return this.databt.getByNombre(bt);
 	}
 	
-	public People getByDni(String dni)throws Exception{
-		People p=new People();
-		p.setDni(dni);
-		return getByDni(p);
-	}*/
 	
-	public BookableTypes getByNombre(BookableTypes bt){
+	public BookableTypes getByNombre(String nombre) throws Exception{
+
+		BookableTypes bt = new BookableTypes();
+		bt.setNombre(nombre);
+		
+		return getByNombre(bt);
+
+	}
+	
+	/*public BookableTypes getByNombre(BookableTypes bt){
 		
 		for (int i=0; i < this.booktypes.size(); i++){
 			if(booktypes.get(i).getNombre().equalsIgnoreCase(bt.getNombre())) {
@@ -50,7 +55,8 @@ private DataBookableTypes databt;
 		}
 		return null;
 		
-	}
+	}*/
+	
 	
 	public ArrayList<BookableTypes> getAll()throws Exception{
 		return databt.getAll();

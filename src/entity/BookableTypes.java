@@ -43,6 +43,15 @@ public class BookableTypes {
 		this.cantReservasPendientes = cantReservasPendientes;
 	}
 	
+	/*@Override
+
+	public boolean equals(Object bt){
+
+		return (bt instanceof BookableTypes) &&
+
+			 (((BookableTypes)bt).getNombre().equals(this.getNombre()));
+				
+	}*/
 	
 	
 	

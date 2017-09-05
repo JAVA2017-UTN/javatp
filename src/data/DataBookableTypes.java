@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import entity.BookableTypes;
+import entity.People;
 import util.AppDataException;
 
 public class DataBookableTypes {
@@ -24,10 +25,8 @@ public class DataBookableTypes {
 					BookableTypes bt =new BookableTypes();
 							bt.setId(Integer.parseInt(rs.getString("id")));
 							bt.setNombre(rs.getString("nombre"));
-							bt.setCantReservasPendientes(Integer.parseInt(rs.getString("cantReservas")));
-					
-					
-					booktypes.add(bt);
+							bt.setCantReservasPendientes(Integer.parseInt(rs.getString("cantReservasPendientes")));
+							booktypes.add(bt);
 				}
 			}
 		} catch (SQLException e) {
@@ -51,34 +50,6 @@ public class DataBookableTypes {
 		
 	}
 	
-	/*public People getByDni(People per) throws Exception{
-		People p=null;
-		PreparedStatement stmt=null;
-		ResultSet rs=null;
-		try {
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select id, nombre, apellido, dni, usuario, contrasenia, estado  from people where dni=?");
-			stmt.setString(1, per.getDni());
-			rs=stmt.executeQuery();
-			if(rs!=null && rs.next()){
-					p=new People();
-					p.setPeople(rs.getString("dni"), rs.getString("nombre"), rs.getString("apellido"), rs.getString("usuario"),
-							rs.getString("contrasenia"), rs.getBoolean("estado"));
-			}
-			
-		} catch (Exception e) {
-			throw e;
-		} finally{
-			try {
-				if(rs!=null)rs.close();
-				if(stmt!=null)stmt.close();
-				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				throw e;
-			}
-		}
-		return p;
-	}*/
 	
 	public void add(BookableTypes bt) throws Exception{
 		PreparedStatement stmt=null;
@@ -101,6 +72,57 @@ public class DataBookableTypes {
 		}
 		try {
 			if(keyResultSet!=null)keyResultSet.close();
+			if(stmt!=null)stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public BookableTypes getByNombre(BookableTypes booktypes) throws Exception{
+		BookableTypes bt =null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select * from bookable_types where nombre=?");
+			stmt.setString(1, booktypes.getNombre());
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()){
+					bt=new BookableTypes();
+					bt.setId(Integer.parseInt(rs.getString("id")));
+					bt.setNombre(rs.getString("nombre"));
+					bt.setCantReservasPendientes(Integer.parseInt(rs.getString("cantReservasPendientes")));
+			}
+			
+		} catch (Exception e) {
+			throw e;
+		} finally{
+			try {
+				if(rs!=null)rs.close();
+				if(stmt!=null)stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				throw e;
+			}
+		}
+		return bt;
+	}
+	
+	public void delete(BookableTypes bt) throws Exception {
+		PreparedStatement stmt=null;
+		ResultSet keyResultSet=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn()
+					.prepareStatement(
+					"delete from bookable_types where id=? "
+					);
+			stmt.setString(1, String.valueOf(bt.getId()));
+			stmt.execute();
+		} catch (SQLException | AppDataException e) {
+			throw e;
+		}
+		try {
 			if(stmt!=null)stmt.close();
 			FactoryConexion.getInstancia().releaseConn();
 		} catch (SQLException e) {
