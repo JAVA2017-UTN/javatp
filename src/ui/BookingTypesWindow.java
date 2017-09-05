@@ -4,16 +4,37 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import controllers.CtrlBookingTypes;
+import entity.BookableTypes;
+import entity.People;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 public class BookingTypesWindow {
+	
+	private CtrlBookingTypes ctrl = new CtrlBookingTypes();
+	private ArrayList<BookableTypes> booktypes;
 
 	private JFrame frmCargarTiposElementos;
 	private JTextField textFieldId;
 	private JTextField textFieldTipoElemento;
 	private JTextField textFieldMaxReservas;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -44,48 +65,187 @@ public class BookingTypesWindow {
 	private void initialize() {
 		frmCargarTiposElementos = new JFrame();
 		frmCargarTiposElementos.setTitle("Cargar tipos elementos");
-		frmCargarTiposElementos.setBounds(100, 100, 447, 273);
+		frmCargarTiposElementos.setBounds(100, 100, 604, 353);
 		frmCargarTiposElementos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCargarTiposElementos.getContentPane().setLayout(null);
 		
 		JLabel lblId = new JLabel("Id ");
-		lblId.setBounds(161, 44, 35, 14);
+		lblId.setBounds(52, 31, 22, 14);
 		frmCargarTiposElementos.getContentPane().add(lblId);
 		
 		JLabel lblTipoElemento = new JLabel("Tipo de elemento");
-		lblTipoElemento.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTipoElemento.setBounds(83, 82, 113, 14);
+		lblTipoElemento.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTipoElemento.setBounds(25, 61, 108, 14);
 		frmCargarTiposElementos.getContentPane().add(lblTipoElemento);
 		
 		textFieldId = new JTextField();
 		textFieldId.setEditable(false);
-		textFieldId.setBounds(221, 41, 65, 20);
+		textFieldId.setBounds(84, 28, 65, 20);
 		frmCargarTiposElementos.getContentPane().add(textFieldId);
 		textFieldId.setColumns(10);
 		
 		textFieldTipoElemento = new JTextField();
 		textFieldTipoElemento.setHorizontalAlignment(SwingConstants.LEFT);
-		textFieldTipoElemento.setBounds(221, 76, 86, 20);
+		textFieldTipoElemento.setBounds(169, 58, 86, 20);
 		frmCargarTiposElementos.getContentPane().add(textFieldTipoElemento);
 		textFieldTipoElemento.setColumns(10);
 		
-		JLabel lblMaxReservas = new JLabel("M\u00E1ximo reservas pendientes");
-		lblMaxReservas.setHorizontalAlignment(SwingConstants.LEFT);
-		lblMaxReservas.setBounds(44, 110, 167, 14);
+		JLabel lblMaxReservas = new JLabel("M\u00E1x. Reservas pendientes");
+		lblMaxReservas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMaxReservas.setBounds(10, 86, 159, 20);
 		frmCargarTiposElementos.getContentPane().add(lblMaxReservas);
 		
 		textFieldMaxReservas = new JTextField();
 		textFieldMaxReservas.setHorizontalAlignment(SwingConstants.LEFT);
-		textFieldMaxReservas.setBounds(221, 107, 86, 20);
+		textFieldMaxReservas.setBounds(179, 86, 65, 20);
 		frmCargarTiposElementos.getContentPane().add(textFieldMaxReservas);
 		textFieldMaxReservas.setColumns(10);
 		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(83, 168, 89, 23);
-		frmCargarTiposElementos.getContentPane().add(btnAceptar);
-		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(218, 168, 89, 23);
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		btnCancelar.setBounds(440, 269, 89, 23);
 		frmCargarTiposElementos.getContentPane().add(btnCancelar);
+		
+		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				agregarClick();
+			}
+		});
+		btnAgregar.setBounds(21, 151, 89, 23);
+		frmCargarTiposElementos.getContentPane().add(btnAgregar);
+		
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				modificarClick();
+			}
+		});
+		btnModificar.setBounds(21, 185, 89, 23);
+		frmCargarTiposElementos.getContentPane().add(btnModificar);
+		
+		JButton btnBorrar = new JButton("Borrar");
+		btnBorrar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				borrarClick();
+			}
+		});
+		btnBorrar.setBounds(21, 219, 89, 23);
+		frmCargarTiposElementos.getContentPane().add(btnBorrar);
+		
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				buscarClick();
+			}
+		});
+		btnBuscar.setBounds(159, 27, 89, 23);
+		frmCargarTiposElementos.getContentPane().add(btnBuscar);
+		
+		JButton btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cleanForm();
+			}
+		});
+		btnLimpiar.setIcon(new ImageIcon(BookingTypesWindow.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
+		btnLimpiar.setBounds(138, 117, 99, 23);
+		frmCargarTiposElementos.getContentPane().add(btnLimpiar);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(281, 31, 281, 227);
+		frmCargarTiposElementos.getContentPane().add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Id", "Nombre", "Max. Reservas pendientes"
+			}
+		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(35);
+		table.getColumnModel().getColumn(1).setPreferredWidth(79);
+		table.getColumnModel().getColumn(2).setPreferredWidth(141);
+		scrollPane.setViewportView(table);
+		
+		try{
+
+			this.booktypes=ctrl.getAll();
+
+		} catch (Exception e){
+
+			JOptionPane.showMessageDialog(this.frmCargarTiposElementos,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	
+	
+	protected void buscarClick(){
+		try {
+			this.mapearAForm(ctrl.getByNombre(this.mapearDeForm()));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(frmCargarTiposElementos, e.getMessage());
+		}
+	}
+	
+	protected void agregarClick(){
+		BookableTypes bt = this.mapearDeForm();
+		try{
+			ctrl.add(bt);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(frmCargarTiposElementos, e.getMessage());
+		}
+		this.textFieldId.setText(String.valueOf(bt.getId()));
+	}
+	
+	protected void borrarClick(){
+		
+		try{
+			ctrl.delete(this.mapearDeForm());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this.frmCargarTiposElementos, e.getMessage());
+		}
+	}	
+	
+	protected void modificarClick(){
+		try{
+			ctrl.update(this.mapearDeForm());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this.frmCargarTiposElementos, e.getMessage());
+		}
+
+	}
+	
+	private void cleanForm() {
+		this.textFieldId.setText(null);
+		this.textFieldTipoElemento.setText(null);
+		this.textFieldMaxReservas.setText(null);
+	}
+			
+	private BookableTypes mapearDeForm(){
+		BookableTypes bt= new BookableTypes();
+		if(!this.textFieldId.getText().isEmpty()){
+			bt.setId(Integer.parseInt(this.textFieldId.getText()));
+		}
+		bt.setNombre(this.textFieldTipoElemento.getText());
+		//bt.setCantReservasPendientes(Integer.parseInt(this.textFieldMaxReservas.getText()));
+		
+		return bt;
+	}
+	
+	private void mapearAForm(BookableTypes bt){
+		this.textFieldId.setText(String.valueOf(bt.getId()));
+		this.textFieldTipoElemento.setText(bt.getNombre());
+		this.textFieldMaxReservas.setText(String.valueOf(bt.getCantReservasPendientes()));
 	}
 }
