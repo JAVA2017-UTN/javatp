@@ -6,17 +6,26 @@ public class Booking {
 	private String detalle;
 	private Date fecha;
 	private Time hora;
-	private BookableTypes tipoElemento;
-	private BookableItems elemento;
+	private int id;
+	private int id_tipoElemento;
+	private int id_elemento;
+	private int id_persona;
+	
+	public Booking() {
+		this.detalle = null;
+		this.fecha = null;
+		this.hora = null;
+	}
 	
 	
-	public Booking(String detalle, Date fecha, Time hora, BookableTypes tipoElemento, BookableItems elemento) {
-		super();
+	public void setBooking(int id, String detalle, Date fecha, Time hora, int id_tipoElemento, int id_elemento, int id_persona) {
+		this.id = id;
 		this.detalle = detalle;
 		this.fecha = fecha;
 		this.hora = hora;
-		this.tipoElemento = tipoElemento;
-		this.elemento = elemento;
+		this.id_tipoElemento = id_tipoElemento;
+		this.id_elemento = id_elemento;
+		this.id_persona = id_persona;
 	}
 
 
@@ -49,24 +58,43 @@ public class Booking {
 		this.hora = hora;
 	}
 
-
-	public BookableTypes getTipoElemento() {
-		return tipoElemento;
+	public int getId() {
+		return id;
 	}
 
 
-	public void setTipoElemento(BookableTypes tipoElemento) {
-		this.tipoElemento = tipoElemento;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 
-	public BookableItems getElemento() {
-		return elemento;
+	public int getId_tipoElemento() {
+		return id_tipoElemento;
 	}
 
 
-	public void setElemento(BookableItems elemento) {
-		this.elemento = elemento;
+	public void setId_tipoElemento(int id_tipoElemento) {
+		this.id_tipoElemento = id_tipoElemento;
+	}
+
+
+	public int getId_elemento() {
+		return id_elemento;
+	}
+
+
+	public void setId_elemento(int id_elemento) {
+		this.id_elemento = id_elemento;
+	}
+
+
+	public int getId_persona() {
+		return id_persona;
+	}
+
+
+	public void setId_persona(int id_persona) {
+		this.id_persona = id_persona;
 	}
 	
 	

@@ -46,19 +46,16 @@ private DataBookableTypes databt;
 
 	}
 	
-	/*public BookableTypes getByNombre(BookableTypes bt){
-		
-		for (int i=0; i < this.booktypes.size(); i++){
-			if(booktypes.get(i).getNombre().equalsIgnoreCase(bt.getNombre())) {
-				return booktypes.get(i);		
-			}
-		}
-		return null;
-		
-	}*/
-	
-	
 	public ArrayList<BookableTypes> getAll()throws Exception{
 		return databt.getAll();
 	}
+	
+	public ArrayList<String> getAllNames()throws Exception{
+		return databt.getAllNames();
+	}
+	
+	public int getTypeId(String type)throws Exception{
+		return databt.getTypeId(type);
+	}
+	
 }
