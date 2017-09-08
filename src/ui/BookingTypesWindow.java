@@ -25,6 +25,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
+import org.jdesktop.beansbinding.BeanProperty;
+import org.jdesktop.swingbinding.JTableBinding;
+import org.jdesktop.swingbinding.SwingBindings;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
 public class BookingTypesWindow {
 	
 	private CtrlBookingTypes ctrl = new CtrlBookingTypes();
@@ -79,7 +86,6 @@ public class BookingTypesWindow {
 		frmCargarTiposElementos.getContentPane().add(lblTipoElemento);
 		
 		textFieldId = new JTextField();
-		textFieldId.setEditable(false);
 		textFieldId.setBounds(84, 28, 65, 20);
 		frmCargarTiposElementos.getContentPane().add(textFieldId);
 		textFieldId.setColumns(10);
@@ -101,15 +107,6 @@ public class BookingTypesWindow {
 		frmCargarTiposElementos.getContentPane().add(textFieldMaxReservas);
 		textFieldMaxReservas.setColumns(10);
 		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		btnCancelar.setBounds(440, 269, 89, 23);
-		frmCargarTiposElementos.getContentPane().add(btnCancelar);
-		
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -117,6 +114,20 @@ public class BookingTypesWindow {
 				agregarClick();
 			}
 		});
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmCargarTiposElementos.dispose();
+			}
+		});
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		btnCancelar.setBounds(440, 269, 89, 23);
+		frmCargarTiposElementos.getContentPane().add(btnCancelar);
 		btnAgregar.setBounds(21, 151, 89, 23);
 		frmCargarTiposElementos.getContentPane().add(btnAgregar);
 		
@@ -162,20 +173,10 @@ public class BookingTypesWindow {
 		frmCargarTiposElementos.getContentPane().add(btnLimpiar);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(281, 31, 281, 227);
+		scrollPane.setBounds(291, 24, 281, 227);
 		frmCargarTiposElementos.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Id", "Nombre", "Max. Reservas pendientes"
-			}
-		));
-		table.getColumnModel().getColumn(0).setPreferredWidth(35);
-		table.getColumnModel().getColumn(1).setPreferredWidth(79);
-		table.getColumnModel().getColumn(2).setPreferredWidth(141);
 		scrollPane.setViewportView(table);
 		
 		try{
@@ -186,8 +187,26 @@ public class BookingTypesWindow {
 
 			JOptionPane.showMessageDialog(this.frmCargarTiposElementos,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
 		}
+
+		initDataBindings();
+		
+		
+		
 	}
 	
+	protected void initDataBindings() {
+		
+		JTableBinding<BookableTypes, java.util.List<BookableTypes>, JTable> jTableBinding = SwingBindings.createJTableBinding(UpdateStrategy.READ, booktypes, table);
+		BeanProperty<BookableTypes, String> personaBeanProperty = BeanProperty.create("id");
+		jTableBinding.addColumnBinding(personaBeanProperty).setColumnName("Id").setEditable(false);
+		BeanProperty<BookableTypes, String> personaBeanProperty_1 = BeanProperty.create("nombre");
+		jTableBinding.addColumnBinding(personaBeanProperty_1).setColumnName("Nombre").setEditable(false);
+		BeanProperty<BookableTypes, String> personaBeanProperty_2 = BeanProperty.create("cantReservasPendientes");
+		jTableBinding.addColumnBinding(personaBeanProperty_2).setColumnName("Cant. Reservas Pend.").setEditable(false);
+		jTableBinding.setEditable(false);
+
+		jTableBinding.bind();
+	}
 	
 	
 	protected void buscarClick(){
@@ -238,7 +257,7 @@ public class BookingTypesWindow {
 			bt.setId(Integer.parseInt(this.textFieldId.getText()));
 		}
 		bt.setNombre(this.textFieldTipoElemento.getText());
-		//bt.setCantReservasPendientes(Integer.parseInt(this.textFieldMaxReservas.getText()));
+		bt.setCantReservasPendientes(Integer.parseInt(this.textFieldMaxReservas.getText()));
 		
 		return bt;
 	}

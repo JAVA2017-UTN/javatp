@@ -45,8 +45,9 @@ private DataBookableTypes databt;
 		return getByNombre(bt);
 
 	}
-	
+
 	public ArrayList<BookableTypes> getAll()throws Exception{
+
 		return databt.getAll();
 	}
 	
