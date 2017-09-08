@@ -1,23 +1,30 @@
 package ui;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JInternalFrame;
+
+import controllers.CtrlABMPeople;
+import controllers.CtrlBooking;
+import controllers.CtrlBookingTypes;
+import controllers.CtrlBookableItems;
+
 import javax.swing.JComboBox;
-import javax.swing.JTextPane;
-import javax.swing.JTable;
-import java.awt.Color;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import java.awt.Font;
+import javax.swing.JLabel;
 
-public class BookingWindow {
+public class BookingWindow extends JInternalFrame {
 
-	private JFrame frmRealizarReserva;
+	private JFrame frame;
+	private JComboBox<String> tipoEleCmbBox;
+	private JComboBox<String> elemCmbBox;
+	private CtrlBooking ctrlBook = new CtrlBooking();
+	private CtrlABMPeople ctrlPer = new CtrlABMPeople();
+	private CtrlBookingTypes ctrlType = new CtrlBookingTypes();
+	private CtrlBookableItems ctrlItems = new CtrlBookableItems();
 
 	/**
 	 * Launch the application.
@@ -27,7 +34,7 @@ public class BookingWindow {
 			public void run() {
 				try {
 					BookingWindow window = new BookingWindow();
-					window.frmRealizarReserva.setVisible(true);
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -37,101 +44,67 @@ public class BookingWindow {
 
 	/**
 	 * Create the application.
+	 * @throws Exception 
 	 */
-	public BookingWindow() {
+	public BookingWindow() throws Exception {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws Exception 
 	 */
-	private void initialize() {
-		frmRealizarReserva = new JFrame();
-		frmRealizarReserva.setTitle("Realizar Reserva");
-		frmRealizarReserva.setBounds(100, 100, 526, 411);
-		frmRealizarReserva.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	private void initialize() throws Exception {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
-		JLabel lblTipoDeElemento = new JLabel("Tipo de elemento");
+		tipoEleCmbBox = new JComboBox();
+		tipoEleCmbBox.setBounds(187, 47, 123, 27);
+		tipoEleCmbBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					llenarElem((String) tipoEleCmbBox.getSelectedItem());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		frame.getContentPane().add(tipoEleCmbBox);
 		
-		JLabel lblFecha = new JLabel("Fecha");
+		JLabel lblTipoElemento = new JLabel("Tipo Elemento");
+		lblTipoElemento.setBounds(10, 53, 123, 14);
+		frame.getContentPane().add(lblTipoElemento);
 		
-		JLabel lblHora = new JLabel("Hora");
+		elemCmbBox = new JComboBox();
+		elemCmbBox.setBounds(187, 120, 128, 27);
+		frame.getContentPane().add(elemCmbBox);
 		
-		JComboBox comboBoxTipoElemento = new JComboBox();
+		JLabel lblElemento = new JLabel("Elemento");
+		lblElemento.setBounds(10, 126, 73, 14);
+		frame.getContentPane().add(lblElemento);
 		
-		JLabel lblDetalle = new JLabel("Detalle");
-		
-		JTextPane textPaneDetalle = new JTextPane();
-		textPaneDetalle.setForeground(Color.BLACK);
-		textPaneDetalle.setBackground(Color.WHITE);
-		
-		JComboBox comboBoxFecha = new JComboBox();
-		
-		JComboBox comboBoxHora = new JComboBox();
-		
-		JButton btnConsultar = new JButton("Consultar");
-		
-		JButton btnCancelar = new JButton("Cancelar");
-		
-		JLabel lblSeleccionarOpcionesA = new JLabel("Seleccionar opciones a consultar");
-		lblSeleccionarOpcionesA.setFont(new Font("Tahoma", Font.BOLD, 13));
-		GroupLayout groupLayout = new GroupLayout(frmRealizarReserva.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(33)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblDetalle)
-							.addGap(36)
-							.addComponent(textPaneDetalle, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(lblFecha)
-								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(comboBoxFecha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(lblHora)
-								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(comboBoxHora, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(lblTipoDeElemento)
-								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(comboBoxTipoElemento, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnConsultar)
-							.addGap(127)
-							.addComponent(btnCancelar))
-						.addComponent(lblSeleccionarOpcionesA, GroupLayout.PREFERRED_SIZE, 248, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(171, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(25)
-					.addComponent(lblSeleccionarOpcionesA)
-					.addGap(63)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(comboBoxTipoElemento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblTipoDeElemento))
-					.addGap(27)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(comboBoxFecha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblFecha))
-					.addPreferredGap(ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(comboBoxHora, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblHora))
-					.addGap(31)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(textPaneDetalle, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDetalle))
-					.addGap(45)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnConsultar)
-						.addComponent(btnCancelar))
-					.addGap(20))
-		);
-		frmRealizarReserva.getContentPane().setLayout(groupLayout);
+		this.llenarTypes();
+	}
+	
+	private void llenarTypes() throws Exception {
+		ArrayList<String> types = new ArrayList<String>();
+		types = ctrlType.getAllNames();
+		for(int i = 0; i<types.size(); i++) {
+			tipoEleCmbBox.addItem(types.get(i));
+		}
+	}
+	
+	private void llenarElem(String type) throws Exception {
+		elemCmbBox.removeAllItems();
+		Integer id_tipo = null;
+		ArrayList<String> items = new ArrayList<String>();
+		id_tipo = ctrlType.getTypeId(type);
+		items = ctrlItems.getAllNames(id_tipo);
+		for(int i = 0; i<items.size(); i++) {
+			elemCmbBox.addItem(items.get(i));
+		}
 	}
 }
