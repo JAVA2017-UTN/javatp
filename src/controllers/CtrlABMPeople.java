@@ -9,12 +9,8 @@ public class CtrlABMPeople {
 
 	private DataPeople dataPer;
 	
-	private ArrayList<People> pers;
-	
-	
 	public CtrlABMPeople(){
 		dataPer = new DataPeople();
-		pers= new ArrayList<People>();
 	}
 	
 	public void add(People p) throws Exception{
@@ -39,18 +35,7 @@ public class CtrlABMPeople {
 		return getByDni(p);
 	}
 	
-	public People getByNombreApellido(People p){
-		
-		for (int i=0; i < this.pers.size(); i++){
-			if(pers.get(i).getNombre().equalsIgnoreCase(p.getNombre())
-				&& pers.get(i).getApellido().equalsIgnoreCase(p.getApellido())) {
-				return pers.get(i);		
-			}
-		}
-		return null; //ver error si falta
-		
-	}
-	
+
 	public ArrayList<People> getAll()throws Exception{
 		return dataPer.getAll();
 	}
