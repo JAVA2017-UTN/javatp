@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import data.DataBookableTypes;
 import entity.BookableTypes;
+import entity.People;
 
 public class CtrlBookingTypes {
 	
@@ -53,6 +54,16 @@ private DataBookableTypes databt;
 	
 	public ArrayList<String> getAllNames()throws Exception{
 		return databt.getAllNames();
+	}
+	
+	public BookableTypes getById(int id)throws Exception{
+		BookableTypes bt = new BookableTypes();
+		bt.setId(id);
+		return getById(id);
+	}
+	
+	public BookableTypes getById(BookableTypes bt) throws Exception{
+		return this.databt.getById(bt);
 	}
 	
 	public int getTypeId(String type)throws Exception{

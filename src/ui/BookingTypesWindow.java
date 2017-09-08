@@ -108,6 +108,10 @@ public class BookingTypesWindow {
 		textFieldMaxReservas.setColumns(10);
 		
 		JButton btnAgregar = new JButton("Agregar");
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnAgregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -119,11 +123,6 @@ public class BookingTypesWindow {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frmCargarTiposElementos.dispose();
-			}
-		});
-		btnCancelar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
 			}
 		});
 		btnCancelar.setBounds(440, 269, 89, 23);
@@ -211,7 +210,7 @@ public class BookingTypesWindow {
 	
 	protected void buscarClick(){
 		try {
-			this.mapearAForm(ctrl.getByNombre(this.mapearDeForm()));
+			this.mapearAForm(ctrl.getById(this.mapearDeForm()));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(frmCargarTiposElementos, e.getMessage());
 		}
@@ -267,4 +266,5 @@ public class BookingTypesWindow {
 		this.textFieldTipoElemento.setText(bt.getNombre());
 		this.textFieldMaxReservas.setText(String.valueOf(bt.getCantReservasPendientes()));
 	}
+	
 }
