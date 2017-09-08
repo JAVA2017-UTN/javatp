@@ -58,7 +58,7 @@ private DataBookableTypes databt;
 	}*/
 	
 	
-	public ArrayList<BookableTypes> getAll()throws Exception{
+	public ArrayList<BookableTypes> getAll() throws Exception{
 		return databt.getAll();
 	}
 }
