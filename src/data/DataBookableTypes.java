@@ -112,6 +112,37 @@ public ArrayList<String> getAllNames() throws Exception{
 		return idtype;
 	}
 	
+	public BookableTypes getById(BookableTypes booktypes) throws Exception{
+		
+		BookableTypes bt=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select id, nombre, cantReservasPendientes from bookable_types where id=?");
+			stmt.setInt(1, booktypes.getId());
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()){
+					bt = new BookableTypes();
+					bt.setId(Integer.parseInt(rs.getString("id")));
+					bt.setNombre(rs.getString("nombre"));
+					bt.setCantReservasPendientes(Integer.parseInt(rs.getString("cantReservasPendientes")));
+			}
+			
+		} catch (Exception e) {
+			throw e;
+		} finally{
+			try {
+				if(rs!=null)rs.close();
+				if(stmt!=null)stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				throw e;
+			}
+		}
+		return bt;
+	}
+	
 	
 	public void add(BookableTypes bt) throws Exception{
 		PreparedStatement stmt=null;
