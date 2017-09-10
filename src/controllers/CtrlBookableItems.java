@@ -30,6 +30,10 @@ private DataBookableItems databi;
 		return databi.getAllNames(id_tipoEle);
 	}
 	
+	public int getItemId(String elem) throws Exception{
+		return databi.getItemId(elem);
+	}
+	
 	/*public ArrayList<BookableItems> getAll()throws Exception{
 		return databi.getAll();
 	}*/

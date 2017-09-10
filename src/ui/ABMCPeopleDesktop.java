@@ -64,6 +64,7 @@ public class ABMCPeopleDesktop extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ABMCPeopleDesktop() {
+		setTitle("Personas");
 		setClosable(true);
 		setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 300, 369);

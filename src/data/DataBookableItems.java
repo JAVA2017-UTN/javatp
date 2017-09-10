@@ -46,5 +46,32 @@ public class DataBookableItems {
 			return names;
 			
 		}
+	
+	public int getItemId(String elem) throws Exception{
+		Integer idElem = null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select *  from bookable_items where nombre=?");
+			stmt.setString(1, elem);
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()){
+					idElem = (Integer.parseInt(rs.getString("id")));
+			}
+			
+		} catch (Exception e) {
+			throw e;
+		} finally{
+			try {
+				if(rs!=null)rs.close();
+				if(stmt!=null)stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				throw e;
+			}
+		}
+		return idElem;
+	}
 
 }

@@ -17,9 +17,10 @@ public class CtrlBooking {
 		dataBook.add(b);
 	}
 	
-	public void delete(Booking b) throws Exception {
-		dataBook.delete(b);
+	public void deleteById(int id) throws Exception {
+		dataBook.delete(id);
 	}
+	
 	
 	public void update(Booking b) throws Exception {
 		dataBook.update(b);
@@ -28,5 +29,9 @@ public class CtrlBooking {
 	public ArrayList<Booking> getList() throws Exception {
 		return dataBook.getAll();
 	}
+	
+	public ArrayList<Booking> getReservasByPerson(int id_pers) throws Exception {
+		return dataBook.getReservasByPerson(id_pers);
+	} 
 
 }
