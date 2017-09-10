@@ -83,6 +83,11 @@ public class MainMenu {
 		frame.getContentPane().add(toolBar_1);
 		
 		JButton btnReservas = new JButton("Reservas");
+		btnReservas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnReservasClick();
+			}
+		});
 		btnReservas.setIcon(new ImageIcon(MainMenu.class.getResource("/com/sun/java/swing/plaf/windows/icons/JavaCup32.png")));
 		toolBar_1.add(btnReservas);
 		
@@ -131,10 +136,15 @@ public class MainMenu {
 		desktopPane.add(pd);
 		pd.setVisible(true);
 	}
+	
+	protected void btnReservasClick() {
+		BookingWindow bw = new BookingWindow();
+		desktopPane.add(bw);
+		bw.setVisible(true);
+	}
 
 	public void setVisible(boolean b, People per) {
 		frame.setVisible(b);
-		frame.setTitle("Bienvenido " + per.getNombre() + " " + per.getApellido());
-		
+		frame.setTitle("Bienvenido " + per.getNombre() + " " + per.getApellido());		
 	}
 }
