@@ -7,42 +7,37 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
-import controllers.CtrlABMPeople;
 import controllers.CtrlBooking;
 import controllers.CtrlBookingTypes;
 import entity.Booking;
-import entity.People;
+import entity.Session;
 import controllers.CtrlBookableItems;
 
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDayChooser;
 import com.toedter.calendar.JMonthChooser;
 import com.toedter.calendar.JYearChooser;
-import com.toedter.components.JSpinField;
 import com.github.lgooddatepicker.components.TimePicker;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import java.awt.TextArea;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
 
-public class BookingWindow extends JInternalFrame {
+public class BookingWindow  {
 
-	private JFrame frmRealizarReserva;
+	private JInternalFrame frmRealizarReserva;
 	private JComboBox<String> tipoEleCmbBox;
 	private JComboBox<String> elemCmbBox;
 	private CtrlBooking ctrlBook = new CtrlBooking();
-	private CtrlABMPeople ctrlPer = new CtrlABMPeople();
 	private CtrlBookingTypes ctrlType = new CtrlBookingTypes();
 	private CtrlBookableItems ctrlItems = new CtrlBookableItems();
 	private JLabel lblHora;
@@ -81,12 +76,13 @@ public class BookingWindow extends JInternalFrame {
 	 * @throws Exception 
 	 */
 	private void initialize(){
-		frmRealizarReserva = new JFrame();
+		frmRealizarReserva = new JInternalFrame();
+		frmRealizarReserva.setTitle("Nueva Reserva");
 		frmRealizarReserva.setBounds(100, 100, 511, 388);
-		frmRealizarReserva.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmRealizarReserva.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		frmRealizarReserva.getContentPane().setLayout(null);
 		
-		tipoEleCmbBox = new JComboBox();
+		tipoEleCmbBox = new JComboBox<String>();
 		tipoEleCmbBox.setBounds(123, 47, 123, 27);
 		tipoEleCmbBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -113,6 +109,10 @@ public class BookingWindow extends JInternalFrame {
 		frmRealizarReserva.getContentPane().add(lblElemento);
 		
 		calendar = new JCalendar();
+		calendar.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
+		calendar.setBackground(Color.LIGHT_GRAY);
+		calendar.getDayChooser().getDayPanel().setBorder(null);
+		calendar.setDecorationBackgroundColor(Color.WHITE);
 		calendar.setBounds(280, 47, 205, 153);
 		frmRealizarReserva.getContentPane().add(calendar);
 		
@@ -121,7 +121,7 @@ public class BookingWindow extends JInternalFrame {
 		frmRealizarReserva.getContentPane().add(lblHora);
 		
 		timePicker = new TimePicker();
-		timePicker.setBounds(123, 133, 76, 23);
+		timePicker.setBounds(123, 133, 76, 27);
 		frmRealizarReserva.getContentPane().add(timePicker);
 		
 		JButton btnReservar = new JButton("Reservar");
@@ -187,7 +187,7 @@ public class BookingWindow extends JInternalFrame {
 		b.setHora(Time.valueOf(this.timePicker.getTime()));
 		b.setId_tipoElemento(this.getId_tipoele((String) tipoEleCmbBox.getSelectedItem()));
 		b.setId_elemento(this.getId_ele((String) elemCmbBox.getSelectedItem()));
-		/*b.setId_persona(String.valueOf(this.contrasenia.getPassword())); */
+		b.setId_persona(Session.getId()); 
 		return b;
 	}
 	
@@ -236,5 +236,13 @@ public class BookingWindow extends JInternalFrame {
 	
 	public void getId_Persona() {
 		
+	}
+	
+	public void setVisible(boolean v) {
+		this.frmRealizarReserva.setVisible(v);
+	}
+	
+	public void setDesktopPane(JDesktopPane p) {
+		p.add(this.frmRealizarReserva);
 	}
 }

@@ -3,7 +3,7 @@ package ui;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -17,23 +17,19 @@ import org.jdesktop.swingbinding.SwingBindings;
 
 import controllers.CtrlBooking;
 import entity.Booking;
+import entity.Session;
 
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-
-import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import org.jdesktop.beansbinding.BeanProperty;
-import org.jdesktop.swingbinding.JTableBinding;
-import org.jdesktop.swingbinding.SwingBindings;
 
 public class BookingCancelWindow {
 
 	private CtrlBooking ctrlBook = new CtrlBooking();
 	private ArrayList<Booking> bookings;
-	private JFrame frmReservas;
+	private JInternalFrame frmReservas;
 	private JTable tblReservas;
 	private JTextField txtId;
 
@@ -64,14 +60,14 @@ public class BookingCancelWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmReservas = new JFrame();
-		frmReservas.setTitle("Reservas");
+		frmReservas = new JInternalFrame();
+		frmReservas.setTitle("Cancelar Reserva");
 		frmReservas.setBounds(100, 100, 786, 359);
-		frmReservas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmReservas.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		frmReservas.getContentPane().setLayout(null);
 		
-		JLabel lblListaDeReservas = new JLabel("Lista de Reservas");
-		lblListaDeReservas.setBounds(10, 22, 105, 20);
+		JLabel lblListaDeReservas = new JLabel("Usuario "+ Session.usuario + ", su lista de reservas es la siguiente:");
+		lblListaDeReservas.setBounds(10, 22, 447, 20);
 		frmReservas.getContentPane().add(lblListaDeReservas);
 		
 		
@@ -126,17 +122,13 @@ public class BookingCancelWindow {
 		}
 		loadTable();
 		this.txtId.setText(null);
-	}
-	}
-	
-	private int getIdPersona() {
-		return 15;
+		}
 	}
 	
 	private void loadTable() {
 		try{
 
-			this.bookings = ctrlBook.getReservasByPerson(getIdPersona());
+			this.bookings = ctrlBook.getReservasByPerson(Session.getId());
 
 		} catch (Exception e){
 
@@ -166,5 +158,13 @@ public class BookingCancelWindow {
 		jTableBinding.setEditable(false);
 
 		jTableBinding.bind();
+	}
+	
+	public void setVisible(boolean v) {
+		this.frmReservas.setVisible(v);
+	}
+	
+	public void setDesktopPane(JDesktopPane p) {
+		p.add(this.frmReservas);
 	}
 }

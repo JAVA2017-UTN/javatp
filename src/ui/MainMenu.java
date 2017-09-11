@@ -1,17 +1,8 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.GridLayout;
-import javax.swing.JPanel;
-import java.awt.Panel;
-import java.awt.TextField;
-import javax.swing.JTextField;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -20,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JToolBar;
 
 import entity.People;
+import entity.Session;
 
 import javax.swing.JDesktopPane;
 import java.awt.SystemColor;
@@ -60,13 +52,13 @@ public class MainMenu {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 774, 705);
+		frame.setBounds(100, 100, 995, 705);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		
 		JToolBar toolBar = new JToolBar();
-		toolBar.setBounds(139, 32, 124, 59);
+		toolBar.setBounds(23, 32, 125, 40);
 		frame.getContentPane().add(toolBar);
 		
 		JButton btnPersonas = new JButton("Personas");
@@ -79,22 +71,35 @@ public class MainMenu {
 		toolBar.add(btnPersonas);
 		
 		JToolBar toolBar_1 = new JToolBar();
-		toolBar_1.setBounds(377, 32, 124, 59);
+		toolBar_1.setBounds(158, 32, 160, 40);
 		frame.getContentPane().add(toolBar_1);
 		
-		JButton btnReservas = new JButton("Reservas");
+		JButton btnReservas = new JButton("Nueva Reserva");
+		toolBar_1.add(btnReservas);
 		btnReservas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnReservasClick();
 			}
 		});
 		btnReservas.setIcon(new ImageIcon(MainMenu.class.getResource("/com/sun/java/swing/plaf/windows/icons/JavaCup32.png")));
-		toolBar_1.add(btnReservas);
 		
 		desktopPane = new JDesktopPane();
 		desktopPane.setBackground(SystemColor.menu);
-		desktopPane.setBounds(10, 104, 738, 530);
+		desktopPane.setBounds(10, 104, 959, 530);
 		frame.getContentPane().add(desktopPane);
+		
+		JToolBar toolBar_2 = new JToolBar();
+		toolBar_2.setBounds(328, 32, 170, 40);
+		frame.getContentPane().add(toolBar_2);
+		
+		JButton btnCancelarReserva = new JButton("Cancelar Reserva");
+		btnCancelarReserva.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnCancelarReservaClick();
+			}
+		});
+		btnCancelarReserva.setIcon(new ImageIcon(MainMenu.class.getResource("/com/sun/java/swing/plaf/windows/icons/JavaCup32.png")));
+		toolBar_2.add(btnCancelarReserva);
 		
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -139,12 +144,18 @@ public class MainMenu {
 	
 	protected void btnReservasClick() {
 		BookingWindow bw = new BookingWindow();
-		desktopPane.add(bw);
+		bw.setDesktopPane(desktopPane);
+		bw.setVisible(true);
+	}
+	
+	protected void btnCancelarReservaClick() {
+		BookingCancelWindow bw = new BookingCancelWindow();
+		bw.setDesktopPane(desktopPane);
 		bw.setVisible(true);
 	}
 
-	public void setVisible(boolean b, People per) {
+	public void setVisible(boolean b) {
 		frame.setVisible(b);
-		frame.setTitle("Bienvenido " + per.getNombre() + " " + per.getApellido());		
+		frame.setTitle("Bienvenido: " + Session.getApellido() + ", " + Session.getNombre());		
 	}
 }

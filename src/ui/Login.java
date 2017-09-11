@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 
 import controllers.CtrlABMPeople;
 import entity.People;
+import entity.Session;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -105,8 +106,10 @@ public class Login {
 		try {
 			People per = ctrl.validaUsuario(this.mapearDeForm());
 			if(per != null) {
+				Session.setSession(per.getId(), per.getNombre(), per.getApellido(), per.getDni(), per.getUsuario(), per.getContrasenia(), per.isHabilitado());
+				JOptionPane.showMessageDialog(null, "Bienvenido al Sistema: " + Session.getUsuario());
 				MainMenu mm = new MainMenu();
-				mm.setVisible(true, per);
+				mm.setVisible(true);
 				frmLogin.setVisible(false);
 			}
 			else {
@@ -115,6 +118,7 @@ public class Login {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
+
 	}
 	
 	private People mapearDeForm(){
