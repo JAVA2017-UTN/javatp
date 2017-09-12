@@ -13,7 +13,7 @@ private DataBookableItems databi;
 		databi = new DataBookableItems();
 	}
 	
-	/*public void add(BookableItems bi) throws Exception{
+	public void add(BookableItems bi) throws Exception{
 		databi.add(bi);
 	}
 	
@@ -23,7 +23,7 @@ private DataBookableItems databi;
 	
 	public void update(BookableItems bi)throws Exception{
 		databi.update(bi);
-	}*/
+	}
 	
 	public ArrayList<String> getAllNames(int id_tipoEle) throws Exception{
 		
@@ -34,8 +34,12 @@ private DataBookableItems databi;
 		return databi.getItemId(elem);
 	}
 	
-	/*public ArrayList<BookableItems> getAll()throws Exception{
+	public BookableItems getById(int id) throws Exception {
+		return databi.getById(id);	
+	}
+	
+	public ArrayList<BookableItems> getAll()throws Exception{
 		return databi.getAll();
-	}*/
+	}
 	
 }
