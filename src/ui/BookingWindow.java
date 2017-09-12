@@ -234,10 +234,6 @@ public class BookingWindow  {
 		}
 	}
 	
-	public void getId_Persona() {
-		
-	}
-	
 	public void setVisible(boolean v) {
 		this.frmRealizarReserva.setVisible(v);
 	}

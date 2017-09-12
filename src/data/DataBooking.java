@@ -52,7 +52,7 @@ public class DataBooking {
 		
 	}
 	
-public ArrayList<Booking> getReservasByPerson(int id_pers) throws Exception{
+	public ArrayList<Booking> getReservasByPerson(int id_pers) throws Exception{
 		
 		Statement stmt=null;
 		ResultSet rs=null;
@@ -93,7 +93,6 @@ public ArrayList<Booking> getReservasByPerson(int id_pers) throws Exception{
 	
 	public void delete(int id) throws Exception {
 		PreparedStatement stmt=null;
-		ResultSet keyResultSet=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
@@ -114,7 +113,6 @@ public ArrayList<Booking> getReservasByPerson(int id_pers) throws Exception{
 	
 	public void update(Booking b) throws Exception {
 		PreparedStatement stmt=null;
-		ResultSet keyResultSet=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(

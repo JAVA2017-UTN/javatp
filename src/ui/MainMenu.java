@@ -10,7 +10,6 @@ import javax.swing.JMenu;
 import javax.swing.ImageIcon;
 import javax.swing.JToolBar;
 
-import entity.People;
 import entity.Session;
 
 import javax.swing.JDesktopPane;
@@ -101,6 +100,27 @@ public class MainMenu {
 		btnCancelarReserva.setIcon(new ImageIcon(MainMenu.class.getResource("/com/sun/java/swing/plaf/windows/icons/JavaCup32.png")));
 		toolBar_2.add(btnCancelarReserva);
 		
+		JToolBar toolBar_3 = new JToolBar();
+		toolBar_3.setBounds(508, 32, 160, 40);
+		frame.getContentPane().add(toolBar_3);
+		
+		JButton btnElementos = new JButton("Elementos");
+		btnElementos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnElementosClick();
+			}
+		});
+		btnElementos.setIcon(new ImageIcon(MainMenu.class.getResource("/com/sun/java/swing/plaf/windows/icons/JavaCup32.png")));
+		toolBar_3.add(btnElementos);
+		
+		JToolBar toolBar_4 = new JToolBar();
+		toolBar_4.setBounds(678, 32, 180, 40);
+		frame.getContentPane().add(toolBar_4);
+		
+		JButton btnTiposDeElementos = new JButton("Tipos de Elementos");
+		btnTiposDeElementos.setIcon(new ImageIcon(MainMenu.class.getResource("/com/sun/java/swing/plaf/windows/icons/JavaCup32.png")));
+		toolBar_4.add(btnTiposDeElementos);
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -152,6 +172,12 @@ public class MainMenu {
 		BookingCancelWindow bw = new BookingCancelWindow();
 		bw.setDesktopPane(desktopPane);
 		bw.setVisible(true);
+	}
+	
+	protected void btnElementosClick() {
+		BookingItemWindow pd= new BookingItemWindow();
+		desktopPane.add(pd);
+		pd.setVisible(true);
 	}
 
 	public void setVisible(boolean b) {
