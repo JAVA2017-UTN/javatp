@@ -113,7 +113,7 @@ public class BookingItemWindow extends JInternalFrame {
 			}
 		});
 		btnLimpiar.setIcon(new ImageIcon(BookingItemWindow.class.getResource("/com/sun/javafx/scene/web/skin/Undo_16x16_JFX.png")));
-		btnLimpiar.setBounds(122, 149, 89, 23);
+		btnLimpiar.setBounds(122, 149, 110, 23);
 		getContentPane().add(btnLimpiar);
 		
 		JButton btnBuscar = new JButton("Buscar");

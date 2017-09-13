@@ -168,7 +168,7 @@ public class MainMenu {
 	
 	protected void btnTiposElementosClick(){
 		BookingTypesWindow btw = new BookingTypesWindow();
-		desktopPane.add(btw);
+		btw.setDesktopPane(desktopPane);
 		btw.setVisible(true);
 	}
 	

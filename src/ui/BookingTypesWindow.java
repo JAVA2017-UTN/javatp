@@ -2,7 +2,6 @@ package ui;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -13,28 +12,23 @@ import javax.swing.SwingConstants;
 
 import controllers.CtrlBookingTypes;
 import entity.BookableTypes;
-import entity.People;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
-public class BookingTypesWindow extends JInternalFrame{
+public class BookingTypesWindow {
 	
 	private CtrlBookingTypes ctrl = new CtrlBookingTypes();
 	private ArrayList<BookableTypes> booktypes;
@@ -293,6 +287,14 @@ public class BookingTypesWindow extends JInternalFrame{
 		this.textFieldId.setText(String.valueOf(bt.getId()));
 		this.textFieldTipoElemento.setText(bt.getNombre());
 		this.textFieldMaxReservas.setText(String.valueOf(bt.getCantReservasPendientes()));
+	}
+	
+	public void setVisible(boolean v) {
+		this.frmCargarTiposElementos.setVisible(v);
+	}
+	
+	public void setDesktopPane(JDesktopPane p) {
+		p.add(this.frmCargarTiposElementos);
 	}
 
 	
