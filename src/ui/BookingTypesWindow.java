@@ -3,10 +3,12 @@ package ui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.SwingConstants;
 
 import controllers.CtrlBookingTypes;
@@ -32,12 +34,12 @@ import org.jdesktop.swingbinding.SwingBindings;
 
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
-public class BookingTypesWindow {
+public class BookingTypesWindow extends JInternalFrame{
 	
 	private CtrlBookingTypes ctrl = new CtrlBookingTypes();
 	private ArrayList<BookableTypes> booktypes;
 
-	private JFrame frmCargarTiposElementos;
+	private JInternalFrame frmCargarTiposElementos;
 	private JTextField textFieldId;
 	private JTextField textFieldTipoElemento;
 	private JTextField textFieldMaxReservas;
@@ -64,17 +66,20 @@ public class BookingTypesWindow {
 	 */
 	public BookingTypesWindow() {
 		initialize();
+		
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmCargarTiposElementos = new JFrame();
+		
+		frmCargarTiposElementos = new JInternalFrame();
 		frmCargarTiposElementos.setTitle("Cargar tipos elementos");
 		frmCargarTiposElementos.setBounds(100, 100, 604, 353);
-		frmCargarTiposElementos.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCargarTiposElementos.setDefaultCloseOperation(JInternalFrame.HIDE_ON_CLOSE);
 		frmCargarTiposElementos.getContentPane().setLayout(null);
+		
 		
 		JLabel lblId = new JLabel("Id ");
 		lblId.setBounds(52, 31, 22, 14);
@@ -86,6 +91,7 @@ public class BookingTypesWindow {
 		frmCargarTiposElementos.getContentPane().add(lblTipoElemento);
 		
 		textFieldId = new JTextField();
+		textFieldId.setEditable(false);
 		textFieldId.setBounds(84, 28, 65, 20);
 		frmCargarTiposElementos.getContentPane().add(textFieldId);
 		textFieldId.setColumns(10);
@@ -157,7 +163,7 @@ public class BookingTypesWindow {
 				buscarClick();
 			}
 		});
-		btnBuscar.setBounds(159, 27, 89, 23);
+		btnBuscar.setBounds(301, 269, 89, 23);
 		frmCargarTiposElementos.getContentPane().add(btnBuscar);
 		
 		JButton btnLimpiar = new JButton("Limpiar");
@@ -193,6 +199,19 @@ public class BookingTypesWindow {
 		
 	}
 	
+	protected void refreshTable(){
+		try{
+
+			this.booktypes=ctrl.getAll();
+
+		} catch (Exception e){
+
+			JOptionPane.showMessageDialog(this.frmCargarTiposElementos,e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+		}
+
+		initDataBindings();
+	}
+	
 	protected void initDataBindings() {
 		
 		JTableBinding<BookableTypes, java.util.List<BookableTypes>, JTable> jTableBinding = SwingBindings.createJTableBinding(UpdateStrategy.READ, booktypes, table);
@@ -210,7 +229,7 @@ public class BookingTypesWindow {
 	
 	protected void buscarClick(){
 		try {
-			this.mapearAForm(ctrl.getById(this.mapearDeForm()));
+			this.mapearAForm(ctrl.getRow(table.getSelectedRow()));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(frmCargarTiposElementos, e.getMessage());
 		}
@@ -220,6 +239,9 @@ public class BookingTypesWindow {
 		BookableTypes bt = this.mapearDeForm();
 		try{
 			ctrl.add(bt);
+			JOptionPane.showMessageDialog(null, "Tipo de elemento agregado");
+			cleanForm();
+			this.refreshTable();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(frmCargarTiposElementos, e.getMessage());
 		}
@@ -230,6 +252,9 @@ public class BookingTypesWindow {
 		
 		try{
 			ctrl.delete(this.mapearDeForm());
+			JOptionPane.showMessageDialog(null, "Tipo de elemento eliminado");
+			cleanForm();
+			this.refreshTable();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this.frmCargarTiposElementos, e.getMessage());
 		}
@@ -238,6 +263,9 @@ public class BookingTypesWindow {
 	protected void modificarClick(){
 		try{
 			ctrl.update(this.mapearDeForm());
+			JOptionPane.showMessageDialog(null, "Tipo de elemento actualizado");
+			cleanForm();
+			this.refreshTable();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this.frmCargarTiposElementos, e.getMessage());
 		}
@@ -266,5 +294,6 @@ public class BookingTypesWindow {
 		this.textFieldTipoElemento.setText(bt.getNombre());
 		this.textFieldMaxReservas.setText(String.valueOf(bt.getCantReservasPendientes()));
 	}
+
 	
 }

@@ -3,12 +3,13 @@ package controllers;
 import java.util.ArrayList;
 
 import data.DataBookableTypes;
+import entity.BookableItems;
 import entity.BookableTypes;
 import entity.People;
 
 public class CtrlBookingTypes {
 	
-private DataBookableTypes databt;
+	private DataBookableTypes databt;
 	
 	private ArrayList<BookableTypes> booktypes;
 	
@@ -23,13 +24,11 @@ private DataBookableTypes databt;
 	}
 	
 	public void delete(BookableTypes bt)throws Exception{
-		this.booktypes.remove(bt);
 		databt.delete(bt);
 	}
 	
 	public void update(BookableTypes bt)throws Exception{
-		this.delete(bt);
-		this.add(bt);
+		databt.update(bt);
 	}
 	
 	public BookableTypes getByNombre(BookableTypes bt) throws Exception{
@@ -56,18 +55,24 @@ private DataBookableTypes databt;
 		return databt.getAllNames();
 	}
 	
-	public BookableTypes getById(int id)throws Exception{
-		BookableTypes bt = new BookableTypes();
-		bt.setId(id);
-		return getById(id);
+	public BookableTypes getById(BookableTypes bt)throws Exception{
+		return this.databt.getById(bt);
 	}
 	
-	public BookableTypes getById(BookableTypes bt) throws Exception{
-		return this.databt.getById(bt);
+	public BookableTypes getById(int id) throws Exception{
+		BookableTypes bt = new BookableTypes();
+		bt.setId(id);
+		return getById(bt);
 	}
 	
 	public int getTypeId(String type)throws Exception{
 		return databt.getTypeId(type);
+	}
+	
+	
+	public BookableTypes getRow(int index) throws Exception{
+		booktypes = databt.getAll();
+		return booktypes.get(index);
 	}
 	
 }

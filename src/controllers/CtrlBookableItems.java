@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 import data.DataBookableItems;
 import entity.BookableItems;
+import entity.BookableTypes;
 
 public class CtrlBookableItems {
 	
-private DataBookableItems databi;
+	private DataBookableItems databi;
+	
+	private ArrayList<BookableItems> bookitems;
 	
 	public CtrlBookableItems(){
 		databi = new DataBookableItems();
@@ -35,11 +38,16 @@ private DataBookableItems databi;
 	}
 	
 	public BookableItems getById(int id) throws Exception {
-		return databi.getById(id);	
+		return databi.getById(id);
 	}
 	
 	public ArrayList<BookableItems> getAll()throws Exception{
 		return databi.getAll();
+	}
+	
+	public BookableItems getRow(int index) throws Exception{
+		bookitems = databi.getAll();
+		return bookitems.get(index);
 	}
 	
 }
