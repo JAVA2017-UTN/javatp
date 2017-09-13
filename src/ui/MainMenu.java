@@ -16,6 +16,8 @@ import javax.swing.JDesktopPane;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainMenu {
 
@@ -118,6 +120,14 @@ public class MainMenu {
 		frame.getContentPane().add(toolBar_4);
 		
 		JButton btnTiposDeElementos = new JButton("Tipos de Elementos");
+		btnTiposDeElementos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnTiposElementosClick();
+			}
+		});
+		
+		
 		btnTiposDeElementos.setIcon(new ImageIcon(MainMenu.class.getResource("/com/sun/java/swing/plaf/windows/icons/JavaCup32.png")));
 		toolBar_4.add(btnTiposDeElementos);
 		
@@ -154,6 +164,12 @@ public class MainMenu {
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mntmAbout.setIcon(new ImageIcon(MainMenu.class.getResource("/com/sun/java/swing/plaf/windows/icons/Question.gif")));
 		mnHelp.add(mntmAbout);
+	}
+	
+	protected void btnTiposElementosClick(){
+		BookingTypesWindow btw = new BookingTypesWindow();
+		desktopPane.add(btw);
+		btw.setVisible(true);
 	}
 	
 	protected void btnPersonasClick() {

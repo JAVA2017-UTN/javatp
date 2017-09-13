@@ -6,11 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import entity.BookableItems;
 import entity.BookableTypes;
 import entity.People;
 import util.AppDataException;
 
 public class DataBookableTypes {
+	
 	public ArrayList<BookableTypes> getAll() throws Exception{
 		
 		Statement stmt=null;
@@ -50,7 +52,7 @@ public class DataBookableTypes {
 		
 	}
 	
-public ArrayList<String> getAllNames() throws Exception{
+	public ArrayList<String> getAllNames() throws Exception{
 		
 		Statement stmt=null;
 		ResultSet rs=null;
@@ -112,15 +114,15 @@ public ArrayList<String> getAllNames() throws Exception{
 		return idtype;
 	}
 	
-	public BookableTypes getById(BookableTypes booktypes) throws Exception{
+	public BookableTypes getById(BookableTypes bookt) throws Exception{
 		
 		BookableTypes bt=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select id, nombre, cantReservasPendientes from bookable_types where id=?");
-			stmt.setInt(1, booktypes.getId());
+					"select * from bookable_types where id=?");
+			stmt.setInt(1, bookt.getId());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()){
 					bt = new BookableTypes();
@@ -211,6 +213,29 @@ public ArrayList<String> getAllNames() throws Exception{
 					"delete from bookable_types where id=? "
 					);
 			stmt.setString(1, String.valueOf(bt.getId()));
+			stmt.execute();
+		} catch (SQLException | AppDataException e) {
+			throw e;
+		}
+		try {
+			if(stmt!=null)stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void update(BookableTypes bt) throws Exception {
+		PreparedStatement stmt=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn()
+					.prepareStatement(
+					"UPDATE bookable_types SET nombre=? , cantReservasPendientes=? where id=? "
+					);
+			
+			stmt.setString(1, bt.getNombre());
+			stmt.setString(2, String.valueOf(bt.getCantReservasPendientes()));
+			stmt.setString(3, String.valueOf(bt.getId()));
 			stmt.execute();
 		} catch (SQLException | AppDataException e) {
 			throw e;

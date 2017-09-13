@@ -17,6 +17,7 @@ import org.jdesktop.swingbinding.SwingBindings;
 import controllers.CtrlBookableItems;
 import controllers.CtrlBookingTypes;
 import entity.BookableItems;
+import entity.BookableTypes;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -26,6 +27,9 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class BookingItemWindow extends JInternalFrame {
+	
+	private CtrlBookableItems ctrl = new CtrlBookableItems();
+	private CtrlBookingTypes ctrlbt = new CtrlBookingTypes();
 	
 	private JTable elemTbl;
 	private JTextField txtId;
@@ -57,7 +61,7 @@ public class BookingItemWindow extends JInternalFrame {
 	public BookingItemWindow() {
 		setClosable(true);
 		setTitle("Elementos");
-		setBounds(100, 100, 643, 278);
+		setBounds(100, 100, 644, 339);
 		getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -80,6 +84,7 @@ public class BookingItemWindow extends JInternalFrame {
 		getContentPane().add(lblTipoElemento);
 		
 		txtId = new JTextField();
+		txtId.setEditable(false);
 		txtId.setBounds(66, 8, 86, 20);
 		getContentPane().add(txtId);
 		txtId.setColumns(10);
@@ -117,7 +122,7 @@ public class BookingItemWindow extends JInternalFrame {
 				btnBuscarClick();
 			}
 		});
-		btnBuscar.setBounds(173, 7, 89, 23);
+		btnBuscar.setBounds(287, 251, 89, 23);
 		getContentPane().add(btnBuscar);
 		
 		JButton btnAgregar = new JButton("Agregar");
@@ -153,7 +158,7 @@ public class BookingItemWindow extends JInternalFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(122, 217, 89, 23);
+		btnCancelar.setBounds(460, 251, 89, 23);
 		getContentPane().add(btnCancelar);
 		
 		loadTable();
@@ -191,13 +196,14 @@ public class BookingItemWindow extends JInternalFrame {
 		this.cleanForm();	
 	}
 	
-	private void btnBuscarClick() {
+	private void btnBuscarClick(){
 		try {
-			this.mapearAForm(ctrlItems.getById(Integer.valueOf(this.txtId.getText())));
+			this.mapearAForm(ctrl.getRow(elemTbl.getSelectedRow()));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
-		}	
+		}
 	}
+		
 	private void btnAgregarClick() {
 		BookableItems bi = this.mapearDeForm();
 		try{
@@ -253,10 +259,12 @@ public class BookingItemWindow extends JInternalFrame {
 		return bi;
 	}
 	
-	private void mapearAForm(BookableItems bi){
+	private void mapearAForm(BookableItems bi) throws Exception{
+		BookableTypes bt = new BookableTypes();
 		this.txtId.setText(String.valueOf(bi.getId()));
 		this.txtNombre.setText(bi.getNombre());
-		this.tipoEleCmbBox.setSelectedItem(null);
+		bt = ctrlbt.getById(bi.getId_tipoElemento());
+		this.tipoEleCmbBox.setSelectedItem(bt.getNombre());
 	}
 	
 	private int getId_tipoEle(String type) {
@@ -264,7 +272,6 @@ public class BookingItemWindow extends JInternalFrame {
 		try {
 			id = ctrlType.getTypeId(type);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return id;
