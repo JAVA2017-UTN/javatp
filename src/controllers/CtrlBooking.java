@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 
 import data.DataBooking;
+import entity.BookableTypes;
 import entity.Booking;
 
 public class CtrlBooking {
@@ -33,5 +34,10 @@ public class CtrlBooking {
 	public ArrayList<Booking> getReservasByPerson(int id_pers) throws Exception {
 		return dataBook.getReservasByPerson(id_pers);
 	} 
+	
+	public void updateDelete(BookableTypes bt) throws Exception{
+		dataBook.updateDelete(bt);
+		
+	}
 
 }

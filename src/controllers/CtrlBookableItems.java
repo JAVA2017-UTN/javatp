@@ -50,4 +50,9 @@ public class CtrlBookableItems {
 		return bookitems.get(index);
 	}
 	
+	public void updateDelete(BookableTypes bt) throws Exception{
+		databi.updateDelete(bt);
+		
+	}
+	
 }

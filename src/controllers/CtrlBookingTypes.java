@@ -24,6 +24,7 @@ public class CtrlBookingTypes {
 	}
 	
 	public void delete(BookableTypes bt)throws Exception{
+		
 		databt.delete(bt);
 	}
 	
