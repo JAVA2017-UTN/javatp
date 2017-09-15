@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import entity.BookableItems;
 import entity.BookableTypes;
+import entity.Booking;
 import entity.People;
 import util.AppDataException;
 
