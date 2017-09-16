@@ -10,8 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.SwingConstants;
 
-import controllers.CtrlBookableItems;
-import controllers.CtrlBooking;
 import controllers.CtrlBookingTypes;
 import entity.BookableTypes;
 
@@ -33,8 +31,6 @@ import org.jdesktop.swingbinding.SwingBindings;
 public class BookingTypesWindow {
 	
 	private CtrlBookingTypes ctrl = new CtrlBookingTypes();
-	private CtrlBookableItems ctrlbi = new CtrlBookableItems();
-	private CtrlBooking ctrlb = new CtrlBooking();
 	private ArrayList<BookableTypes> booktypes;
 
 	private JInternalFrame frmCargarTiposElementos;
@@ -249,14 +245,12 @@ public class BookingTypesWindow {
 	protected void borrarClick(){
 		
 		try{
-			ctrlbi.updateDelete(this.mapearDeForm());
-			ctrlb.updateDelete(this.mapearDeForm());
 			ctrl.delete(this.mapearDeForm());
 			JOptionPane.showMessageDialog(null, "Tipo de elemento eliminado");
 			cleanForm();
 			this.refreshTable();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this.frmCargarTiposElementos, e.getMessage());
+			JOptionPane.showMessageDialog(this.frmCargarTiposElementos, "Imposible eliminar tipo de elemento. Modificar antes elementos o reservas");
 		}
 	}	
 	

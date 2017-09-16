@@ -32,6 +32,7 @@ public class BookingCancelWindow {
 	private JInternalFrame frmReservas;
 	private JTable tblReservas;
 	private JTextField txtId;
+	
 
 	/**
 	 * Launch the application.
@@ -128,7 +129,7 @@ public class BookingCancelWindow {
 	private void loadTable() {
 		try{
 
-			this.bookings = ctrlBook.getReservasByPerson(Session.getId());
+			this.bookings = ctrlBook.getReservasByPerson(Session.getDni());
 
 		} catch (Exception e){
 
@@ -155,6 +156,7 @@ public class BookingCancelWindow {
 		jTableBinding.addColumnBinding(personaBeanProperty_4).setColumnName("ID Elemento").setEditable(false);
 		BeanProperty<Booking, String> personaBeanProperty_6 = BeanProperty.create("id_persona");
 		jTableBinding.addColumnBinding(personaBeanProperty_6).setColumnName("ID Persona").setEditable(false);
+		
 		jTableBinding.setEditable(false);
 
 		jTableBinding.bind();

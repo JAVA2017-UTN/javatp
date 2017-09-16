@@ -7,8 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import entity.BookableItems;
-import entity.BookableTypes;
-import entity.People;
 import util.AppDataException;
 
 public class DataBookableItems {
@@ -165,7 +163,7 @@ public class DataBookableItems {
 	
 	public void delete(BookableItems bi) throws Exception {
 		PreparedStatement stmt=null;
-		ResultSet keyResultSet=null;
+		//ResultSet keyResultSet=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
@@ -212,26 +210,5 @@ public class DataBookableItems {
 		}
 	}
 	
-	public void updateDelete(BookableTypes bt) throws Exception {
-		PreparedStatement stmt=null;
-		ResultSet keyResultSet=null;
-		try {
-			stmt=FactoryConexion.getInstancia().getConn()
-					.prepareStatement(
-					"update bookable_items set id_tipo_elemento = ? where id_tipo_elemento = ?;"
-					);
-			stmt.setNull(1, bt.getId());
-			stmt.setString(2, String.valueOf(bt.getId()));
-			stmt.execute();
-		} catch (SQLException | AppDataException e) {
-			throw e;
-		}
-		try {
-			if(stmt!=null)stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 
 }

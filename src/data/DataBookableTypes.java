@@ -6,10 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import entity.BookableItems;
 import entity.BookableTypes;
-import entity.Booking;
-import entity.People;
 import util.AppDataException;
 
 public class DataBookableTypes {
@@ -207,7 +204,7 @@ public class DataBookableTypes {
 	
 	public void delete(BookableTypes bt) throws Exception {
 		PreparedStatement stmt=null;
-		ResultSet keyResultSet=null;
+		//ResultSet keyResultSet=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
