@@ -2,9 +2,6 @@ package data;
 
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
-import java.security.KeyStore.ProtectionParameter;
 import java.sql.*;
 
 import entity.*;

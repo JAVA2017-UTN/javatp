@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import data.DataBookableItems;
 import entity.BookableItems;
-import entity.BookableTypes;
 
 public class CtrlBookableItems {
 	
@@ -50,9 +49,5 @@ public class CtrlBookableItems {
 		return bookitems.get(index);
 	}
 	
-	public void updateDelete(BookableTypes bt) throws Exception{
-		databi.updateDelete(bt);
-		
-	}
 	
 }

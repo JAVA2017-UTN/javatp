@@ -3,15 +3,18 @@ package controllers;
 import java.util.ArrayList;
 
 import data.DataBooking;
-import entity.BookableTypes;
 import entity.Booking;
+import entity.People;
 
 public class CtrlBooking {
 	
 	private DataBooking dataBook;
+	private ArrayList<Booking> res;
+	private CtrlABMPeople ctrlp = new CtrlABMPeople(); 
 	
 	public CtrlBooking() {
 		dataBook = new DataBooking();
+		res = new ArrayList<Booking>();
 	}
 	
 	public void add(Booking b) throws Exception {
@@ -31,13 +34,11 @@ public class CtrlBooking {
 		return dataBook.getAll();
 	}
 	
-	public ArrayList<Booking> getReservasByPerson(int id_pers) throws Exception {
-		return dataBook.getReservasByPerson(id_pers);
-	} 
-	
-	public void updateDelete(BookableTypes bt) throws Exception{
-		dataBook.updateDelete(bt);
-		
+	public ArrayList<Booking> getReservasByPerson(String dni) throws Exception {
+		People p = new People();
+		p = ctrlp.getByDni(dni);
+		return dataBook.getReservasByPerson(p);
 	}
-
+	
+	
 }

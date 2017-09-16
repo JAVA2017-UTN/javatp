@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
@@ -20,7 +19,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;

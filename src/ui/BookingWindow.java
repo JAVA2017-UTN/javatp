@@ -180,7 +180,7 @@ public class BookingWindow  {
 		JYearChooser year = this.calendar.getYearChooser();
 		JMonthChooser month = this.calendar.getMonthChooser();
 		JDayChooser day = this.calendar.getDayChooser();
-		String date = year.getYear() + "-" + month.getMonth() + "-" + day.getDay();
+		String date = year.getYear() + "-" + (month.getMonth()+1) + "-" + day.getDay();
 		Booking b = new Booking();
 		b.setDetalle(this.txtDetalle.getText());
 		b.setFecha(Date.valueOf(date));

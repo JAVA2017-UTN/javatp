@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import entity.BookableTypes;
 import entity.Booking;
 import entity.People;
 import util.AppDataException;
@@ -53,15 +52,17 @@ public class DataBooking {
 		
 	}
 	
-	public ArrayList<Booking> getReservasByPerson(int id_pers) throws Exception{
+	public ArrayList<Booking> getReservasByPerson(People p) throws Exception{
 		
-		Statement stmt=null;
+		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		ArrayList<Booking> books= new ArrayList<Booking>();
 		try {
 			stmt = FactoryConexion.getInstancia()
-					.getConn().createStatement();
-			rs = stmt.executeQuery("select * from booking where id_persona = '15' and fecha >= CURRENT_TIMESTAMP();");
+					.getConn().prepareStatement("select * from booking where id_persona = ? and fecha >= CURRENT_TIMESTAMP();");
+			stmt.setString(1, String.valueOf(p.getId()));
+					//.getConn().createStatement();
+			rs = stmt.executeQuery(); //("select * from booking where id_persona = '15' and fecha >= CURRENT_TIMESTAMP();");
 			if(rs!=null){
 				while(rs.next()){
 					Booking b = new Booking();
@@ -91,6 +92,7 @@ public class DataBooking {
 		return books;
 		
 	}
+	
 	
 	public void delete(int id) throws Exception {
 		PreparedStatement stmt=null;
@@ -144,7 +146,7 @@ public class DataBooking {
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
-					"insert into booking(fecha, hora, detalle, id_elemento, id_tipo_elemento, id_persona) values (?,?,?,?,?,'15')",
+					"insert into booking(fecha, hora, detalle, id_elemento, id_tipo_elemento, id_persona) values (?,?,?,?,?,?)",
 					PreparedStatement.RETURN_GENERATED_KEYS
 					);
 			stmt.setDate(1, b.getFecha());
@@ -152,7 +154,7 @@ public class DataBooking {
 			stmt.setString(3, b.getDetalle());
 			stmt.setInt(4, b.getId_elemento());
 			stmt.setInt(5, b.getId_tipoElemento());
-			/*stmt.setInt(6, b.getId_persona());*/
+			stmt.setInt(6, b.getId_persona());
 			stmt.executeUpdate();
 			keyResultSet=stmt.getGeneratedKeys();
 			if(keyResultSet!=null && keyResultSet.next()){
@@ -170,28 +172,6 @@ public class DataBooking {
 		}
 	}
 	
-	public void updateDelete(BookableTypes bt) throws Exception {
-		PreparedStatement stmt=null;
-		ResultSet keyResultSet=null;
-		try {
-			stmt=FactoryConexion.getInstancia().getConn()
-					.prepareStatement(
-					"update booking set id_tipo_elemento = ? where id_tipo_elemento = ?;"
-					);
-			stmt.setNull(1, bt.getId());
-			stmt.setString(2, String.valueOf(bt.getId()));
-			stmt.execute();
-		} catch (SQLException | AppDataException e) {
-			throw e;
-		}
-		try {
-			if(stmt!=null)stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	
 	
 	
