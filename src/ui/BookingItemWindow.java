@@ -228,7 +228,7 @@ public class BookingItemWindow extends JInternalFrame {
 		try{
 			ctrlItems.delete(this.mapearDeForm());
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, e.getMessage());
+			JOptionPane.showMessageDialog(this, "Imposible eliminar elemento. Antes modifique las reservas");
 		}
 		loadTable();
 	}
